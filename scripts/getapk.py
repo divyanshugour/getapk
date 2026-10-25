@@ -14,6 +14,7 @@ import os
 import re
 import shutil
 import subprocess
+import tempfile
 import sys
 import urllib.parse
 import urllib.request
@@ -93,7 +94,8 @@ def via_mirror(pkg: str, out: str):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("link", help="Play Store URL or package id")
-    ap.add_argument("--out", default="apks")
+    ap.add_argument("--out", default=os.path.join(tempfile.gettempdir(), "getapk"),
+                    help="staging dir (default: system temp dir, not your project)")
     ap.add_argument("--method", choices=["auto", "adb", "mirror"], default="auto")
     ap.add_argument("--serial")
     a = ap.parse_args()

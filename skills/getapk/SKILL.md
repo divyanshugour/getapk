@@ -5,16 +5,17 @@ description: Extract the APK of an Android app from its Google Play Store link o
 
 # getapk
 
-Turns a Play Store link into an APK file on disk.
+Turns a Play Store link into an APK that is handed to the user in the chat.
 
 ## Steps
 
 1. Get the link (`https://play.google.com/store/apps/details?id=<package>`) or a bare package id. The package id is the `id=` query parameter.
-2. Run the helper (output defaults to `./apks`):
+2. Run the helper (it stages the file in the system temp dir, never in the user's project; only pass `--out` if the user asks):
    ```
    python3 "${CLAUDE_PLUGIN_ROOT}/scripts/getapk.py" "<link>" [--out DIR] [--method auto|adb|mirror] [--serial SERIAL]
    ```
-3. Report the saved path(s) and size. If several files were saved it is a split APK (base + config splits); tell the user to install with `adb install-multiple`.
+3. **Deliver the file in the chat, not in a project folder.** Call the `SendUserFile` tool with the saved path(s) (`display: "attach"`) so the APK appears in the conversation. If `SendUserFile` is not available in this environment, say so and give the temp path instead. Do not copy or commit the APK into the user's repo. Also report the size.
+   If several files were saved it is a split APK (base + config splits); tell the user to install with `adb install-multiple`.
 
 ## How it works
 
