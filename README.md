@@ -14,3 +14,7 @@ Requires Python 3; `adb` for the adb method.
 Install locally: `claude --plugin-dir /path/to/getapk`
 
 Use only for apps you have the right to copy. Paid apps are not supported.
+
+## License
+
+MIT, see [LICENSE](LICENSE).
