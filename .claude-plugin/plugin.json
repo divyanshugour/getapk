@@ -2,6 +2,7 @@
   "name": "getapk",
   "version": "0.1.0",
   "license": "MIT",
+  "icon": ".claude-plugin/icon.png",
   "description": "Extract the APK of an Android app from its Google Play Store link with /getapk <link>",
   "author": { "name": "divyanshugour" },
   "keywords": ["android", "apk", "playstore", "adb"]

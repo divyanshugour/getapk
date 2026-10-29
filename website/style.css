@@ -36,3 +36,5 @@ details p{color:var(--muted);margin:8px 0 0}
 .note{border-left:3px solid var(--accent);background:var(--card);padding:12px 16px;border-radius:0 10px 10px 0;color:var(--muted)}
 footer{border-top:1px solid var(--line);padding:28px 0 48px;color:var(--muted);font-size:14px}
 footer a{color:inherit}
+.logo{display:flex;align-items:center;gap:10px}
+.logo img{border-radius:7px}

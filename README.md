@@ -1,5 +1,7 @@
 # getapk — Claude Code plugin
 
+<p align="center"><img src="website/assets/logo.svg" alt="getapk logo" width="96"></p>
+
 `/getapk <play-store-link>` extracts the APK of an Android app.
 
 ```

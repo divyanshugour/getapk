@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="getapk logo">
+  <rect width="512" height="512" rx="112" fill="#2f8f5b"/>
+  <!-- package box -->
+  <path d="M256 92 408 168v176L256 420 104 344V168z" fill="#ffffff" opacity=".16"/>
+  <path d="M256 92 408 168 256 244 104 168z" fill="#ffffff" opacity=".9"/>
+  <path d="M104 168 256 244V420L104 344z" fill="#ffffff" opacity=".6"/>
+  <path d="M408 168 256 244V420L408 344z" fill="#ffffff" opacity=".35"/>
+  <!-- download arrow -->
+  <path d="M256 150v128m0 0-48-48m48 48 48-48" fill="none" stroke="#1d6b42" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
