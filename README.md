@@ -18,3 +18,5 @@ Use only for apps you have the right to copy. Paid apps are not supported.
 ## License
 
 MIT, see [LICENSE](LICENSE).
+
+Website: see [`website/`](website/) (static, open `website/index.html`).

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>getapk – APK from a Play Store link</title>
+<meta name="description" content="getapk is a Claude Code plugin: type /getapk with a Google Play link and get the app's APK delivered in the chat.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="nav"><div class="wrap">
+  <span class="logo">getapk</span>
+  <nav><a href="#how">How it works</a><a href="#install">Install</a><a href="#usage">Usage</a><a href="#faq">FAQ</a><a href="https://github.com/divyanshugour/getapk">GitHub</a></nav>
+</div></header>
+
+<main class="wrap">
+<div class="hero">
+  <h1>Paste a Play Store link.<br>Get the APK in the chat.</h1>
+  <p>getapk is a plugin for Claude Code. Run <code>/getapk</code> with a Google Play link and Claude fetches the app's APK and hands the file to you in the conversation, with nothing saved in your project folder.</p>
+  <a class="btn" href="#install">Install the plugin</a><a class="btn ghost" href="https://github.com/divyanshugour/getapk">View source</a>
+  <pre><code>/getapk https://play.google.com/store/apps/details?id=com.whatsapp</code></pre>
+</div>
+
+<section id="how">
+  <h2>How it works</h2>
+  <ol class="steps">
+    <li><h3>You give a link</h3>Any <code>play.google.com/store/apps/details?id=…</code> link, or just a package id like <code>com.whatsapp</code>. The plugin reads the <code>id=</code> value.</li>
+    <li><h3>It picks a method</h3>First it tries <strong>adb</strong> on a connected phone or emulator. If the app isn't there, it falls back to a <strong>mirror</strong> download.</li>
+    <li><h3>It checks the file</h3>The result must be a real APK (a valid zip with an <code>AndroidManifest.xml</code>), otherwise it is discarded.</li>
+    <li><h3>It sends it to you</h3>The file is staged in your system temp folder and attached to the chat. Your repo stays clean.</li>
+  </ol>
+  <div class="grid">
+    <div class="card"><h3>adb</h3><p>Runs <code>adb shell pm path</code> then <code>adb pull</code>. Most reliable, and handles split APKs. Needs the app installed on a device with USB debugging on.</p></div>
+    <div class="card"><h3>mirror</h3><p>Downloads the latest APK of a <strong>free</strong> app from APKPure's public endpoint. No phone needed.</p></div>
+  </div>
+</section>
+
+<section id="install">
+  <h2>Install</h2>
+  <p>Run these in your own terminal (Python 3 required):</p>
+  <pre><code>git clone https://github.com/divyanshugour/getapk
+claude --plugin-dir ./getapk</code></pre>
+  <p>Inside Claude Code, type <code>/help</code> and check that <code>/getapk</code> is listed. It may appear as <code>/getapk:getapk</code>.</p>
+</section>
+
+<section id="usage">
+  <h2>Usage</h2>
+  <pre><code>/getapk &lt;play-store-link&gt; [--method auto|adb|mirror] [--out DIR]</code></pre>
+  <table>
+    <tr><th>Option</th><th>What it does</th></tr>
+    <tr><td><code>--method auto</code></td><td>Default. adb first, then the mirror.</td></tr>
+    <tr><td><code>--method adb</code></td><td>Only pull from a connected device.</td></tr>
+    <tr><td><code>--method mirror</code></td><td>Only download from the mirror (free apps).</td></tr>
+    <tr><td><code>--out DIR</code></td><td>Stage files in DIR instead of the temp folder.</td></tr>
+  </table>
+  <p>You can also run the script directly: <code>python3 scripts/getapk.py &lt;link&gt;</code></p>
+  <p class="note"><strong>Chat delivery</strong> works where Claude Code can attach files (the web and app). In a plain terminal, Claude shows the temp file path instead.</p>
+</section>
+
+<section id="faq">
+  <h2>FAQ</h2>
+  <details><summary>Why did the download fail?</summary><p>The app is probably paid, region-locked or removed, so the mirror can't serve it. Use the adb method with a device that has the app installed.</p></details>
+  <details><summary>What is a split APK?</summary><p>Some apps ship as a base APK plus config splits. adb saves them all; install them together with <code>adb install-multiple</code>.</p></details>
+  <details><summary>Is the mirror version the same as Play Store's?</summary><p>It is the latest version the mirror holds, which can lag behind Play Store. adb gives you exactly what is on your device.</p></details>
+  <details><summary>Does it work for paid apps?</summary><p>No. The plugin is not meant to get around payment, licensing or DRM.</p></details>
+</section>
+
+<section>
+  <h2>Use it responsibly</h2>
+  <p class="note">Only extract apps you have the right to copy: your own apps, free apps, or software you are permitted to analyse. Third-party mirrors are outside this project's control, and APKs from any source should be scanned before you install them.</p>
+</section>
+</main>
+
+<footer><div class="wrap">MIT licensed · <a href="https://github.com/divyanshugour/getapk">github.com/divyanshugour/getapk</a></div></footer>
+
+<script>
+document.querySelectorAll('pre').forEach(function(pre){
+  var b=document.createElement('button');b.className='copy';b.textContent='Copy';
+  b.onclick=function(){
+    var t=pre.innerText.replace(/^Copy\n?/,'');
+    try{navigator.clipboard.writeText(t).then(function(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy'},1500)})}catch(e){}
+  };
+  pre.appendChild(b);
+});
+</script>
+</body>
+</html>
